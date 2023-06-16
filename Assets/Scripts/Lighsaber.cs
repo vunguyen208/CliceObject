@@ -19,19 +19,10 @@ public class Lighsaber : MonoBehaviour
     [SerializeField]
     [Tooltip("The empty game object located at the base of the blade")]
     private GameObject _base = null;
-
-    [SerializeField]
-    [Tooltip("The mesh object with the mesh filter and mesh renderer")]
-    private GameObject _meshParent = null;
-
+    
     [SerializeField]
     [Tooltip("The number of frame that the trail should be rendered for")]
     private int _trailFrameLength = 3;
-
-    [SerializeField]
-    [ColorUsage(true, true)]
-    [Tooltip("The colour of the blade and trail")]
-    private Color _colour = Color.red;
 
     [SerializeField]
     [Tooltip("The amount of force applied to each side of a slice")]
@@ -50,16 +41,9 @@ public class Lighsaber : MonoBehaviour
     void Start()
     {
         //Init mesh and triangles
-        _meshParent.transform.position = Vector3.zero;
+        
         _mesh = new Mesh();
-        _meshParent.GetComponent<MeshFilter>().mesh = _mesh;
-
-        Material trailMaterial = Instantiate(_meshParent.GetComponent<MeshRenderer>().sharedMaterial);
-        trailMaterial.SetColor("Color_8F0C0815", _colour);
-        _meshParent.GetComponent<MeshRenderer>().sharedMaterial = trailMaterial;
-
         Material bladeMaterial = Instantiate(_blade.GetComponent<MeshRenderer>().sharedMaterial);
-        bladeMaterial.SetColor("Color_AF2E1BB", _colour);
         _blade.GetComponent<MeshRenderer>().sharedMaterial = bladeMaterial;
 
         _vertices = new Vector3[_trailFrameLength * NUM_VERTICES];
@@ -159,7 +143,7 @@ public class Lighsaber : MonoBehaviour
         Destroy(other.gameObject);
 
         Rigidbody rigidbody = slices[1].GetComponent<Rigidbody>();
-        Vector3 newNormal = transformedNormal + Vector3.up * _forceAppliedToCut;
-        rigidbody.AddForce(newNormal, ForceMode.Impulse);
+        //Vector3 newNormal = transformedNormal + Vector3.up * _forceAppliedToCut;
+        //rigidbody.AddForce(newNormal, ForceMode.Impulse);
     }
 }
